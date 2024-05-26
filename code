@@ -1,0 +1,153 @@
+int R1=6; //pins for RED LEDs 
+int R2=7; 
+int R3=8; 
+int R4=9; 
+int G1=2; // Pins for Green LEDs and immediate next 
+yellow LEDs 
+int G2=3; 
+int G3=4; 
+int G4=5; 
+int sensor1=10; 
+int sensorState1=0; 
+int lastsensorState1=0; 
+int CarCounter1=0; 
+int sensorState2=0; 
+int sensor2=11; 
+int lastsensorState2=0; 
+int CarCounter2=0; 
+int sensorState3=0; 
+int sensor3=12; 
+int lastsensorState3=0; 
+int CarCounter3=0; 
+int sensorState4=0; 
+int sensor4=13; 
+int lastsensorState4=0; 
+int CarCounter4=0; 
+unsigned long previousMillis = 000; 
+long interval =5000; 
+void setup() //part that is executed once when the
+program begin 
+{ 
+pinMode(G1, OUTPUT); 
+pinMode(G2, OUTPUT); 
+pinMode(G3, OUTPUT); 
+pinMode(G4, OUTPUT); 
+pinMode(R1, OUTPUT); 
+pinMode(R2, OUTPUT); 
+pinMode(R3, OUTPUT); 
+pinMode(R4, OUTPUT); 
+digitalWrite(G1, HIGH); 
+digitalWrite(R3, HIGH); 
+digitalWrite(R4, HIGH); 
+Serial.begin(9600); // for serial monitor
+ } 
+void loop() // Part that is executed again and again
+{ 
+ //Counting mechanism for sensor1
+sensorState1 = digitalRead(sensor1); 
+if (sensorState1 != lastsensorState1) 
+{ if (sensorState1 == HIGH) 
+ { ++CarCounter1; 
+ } } 
+ lastsensorState1 = sensorState1;
+//Counting mechanism for sensor2
+ sensorState2 = digitalRead(sensor2); 
+if (sensorState2 != lastsensorState2) 
+ { 
+if (sensorState2 == HIGH) 
+ ++CarCounter2; 
+ } 
+ lastsensorState2 = sensorState2;
+//Counting mechanism for sensor3
+sensorState3 = digitalRead(sensor3); 
+if (sensorState3 != lastsensorState3) 
+ { 
+if (sensorState3 == HIGH) 
+ ++CarCounter3; 
+ } 
+ lastsensorState3 = sensorState3;
+//Counting mechanism for sensor4
+ sensorState4 = digitalRead(sensor4); 
+if (sensorState4 != lastsensorState4)
+ { 
+if (sensorState4 == HIGH) 
+ ++CarCounter4; 
+ } 
+ lastsensorState4 = sensorState4;
+unsigned long currentMillis = millis();
+//Millis function used for creating delay
+if (currentMillis - previousMillis>= interval) 
+ { 
+Serial.print("time :"); 
+Serial.println(previousMillis); 
+previousMillis = currentMillis; 
+if(digitalRead(G1)==HIGH) 
+ { 
+digitalWrite (G2, HIGH); 
+digitalWrite (G3, LOW); 
+digitalWrite (G4, LOW); 
+digitalWrite (G1,LOW); 
+digitalWrite (R4,HIGH); 
+digitalWrite (R1,HIGH); 
+digitalWrite (R2,LOW); 
+digitalWrite (R3,LOW); 
+Serial.print ("number of car passed in 2: "); 
+Serial.println(CarCounter2); 
+interval= 1000*CarCounter2+1000; 
+ CarCounter2=0; 
+} 
+else if(digitalRead(G2)==HIGH) 
+ { 
+digitalWrite(G3, HIGH); 
+digitalWrite(G4, LOW); 
+digitalWrite(G1, LOW); 
+digitalWrite(G2,LOW); 
+digitalWrite(R1,HIGH); 
+digitalWrite(R2,HIGH); 
+digitalWrite(R3,LOW); 
+digitalWrite(R4,LOW); 
+Serial.print("number of car passed in 3: "); 
+Serial.println(CarCounter3); 
+interval= 1000*CarCounter3+1000; 
+ CarCounter3=0; 
+ } 
+else if(digitalRead(G3)==HIGH) 
+ { 
+digitalWrite(G4, HIGH); 
+digitalWrite(G1, LOW); 
+digitalWrite(G2, LOW); 
+digitalWrite(G3,LOW); 
+digitalWrite(R2,HIGH); 
+digitalWrite(R3,HIGH); 
+digitalWrite(R4,LOW); 
+digitalWrite(R1,LOW); 
+Serial.print("number of car passed in 4: "); 
+Serial.println(CarCounter4); 
+interval= 1000*CarCounter4+1000; 
+ CarCounter4=0; 
+ } 
+else if(digitalRead(G4)==HIGH) 
+ { 
+digitalWrite(G1, HIGH); 
+
+digitalWrite(G2, LOW); 
+digitalWrite(G3, LOW); 
+digitalWrite(G4,LOW); 
+digitalWrite(R3,HIGH); 
+digitalWrite(R4,HIGH); 
+digitalWrite(R1,LOW); 
+digitalWrite(R2,LOW); 
+Serial.print ("number of car passed in 1: "); 
+Serial.println(CarCounter1); 
+ Interval = 1000*CarCounter1+1000; 
+ CarCounter1=0; 
+} } } 
+Counting mechanism 
+sensorState1 = digitalRead(sensor1); 
+if (sensorState1 != lastsensorState1) 
+sensorState1; 
+{ 
+if (sensorState1 == HIGH) 
+ ++CarCounter1; 
+ } 
+ lastsensorState1 = sensorState1; 
